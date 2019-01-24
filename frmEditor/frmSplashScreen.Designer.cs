@@ -7,7 +7,7 @@
  */
 
 
-namespace Exercise8
+namespace frmEditor
 {
     partial class frmSplashScreen
     {
@@ -126,7 +126,6 @@ namespace Exercise8
             this.Name = "frmSplashScreen";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmSplashScreen";
-            //this.Load += new System.EventHandler(this.frmSplashScreen_Load);
             this.ResumeLayout(false);
 
         }

@@ -89,6 +89,7 @@ namespace frmEditor
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.rtbEditor = new System.Windows.Forms.RichTextBox();
+            this.nfyMessage = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip.SuspendLayout();
             this.tspOptions.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -315,12 +316,12 @@ namespace frmEditor
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(144, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.aboutToolStripMenuItem.Text = "&Acerca de... ...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -634,6 +635,13 @@ namespace frmEditor
             this.rtbEditor.TabIndex = 4;
             this.rtbEditor.Text = "";
             // 
+            // nfyMessage
+            // 
+            this.nfyMessage.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.nfyMessage.Icon = ((System.Drawing.Icon)(resources.GetObject("nfyMessage.Icon")));
+            this.nfyMessage.Text = "Text Editor";
+            this.nfyMessage.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.nfyMessage_MouseDoubleClick);
+            // 
             // frmTextEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -648,6 +656,7 @@ namespace frmEditor
             this.MainMenuStrip = this.menuStrip;
             this.Name = "frmTextEditor";
             this.Text = "Editor de Texto";
+            this.Shown += new System.EventHandler(this.frmTextEditor_Shown);
             this.SizeChanged += new System.EventHandler(this.frmTextEditor_SizeChanged);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -712,6 +721,7 @@ namespace frmEditor
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripButton tsbForeColor;
         private System.Windows.Forms.ToolStripButton tsbBackColor;
+        private System.Windows.Forms.NotifyIcon nfyMessage;
     }
 }
 

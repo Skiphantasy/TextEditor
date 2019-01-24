@@ -21,12 +21,14 @@ namespace frmEditor
 {
     public partial class frmTextEditor : Form
     {
+        #region attributes
         private string directoryPath = "";
         private bool isBold = false;
         private bool isItalic = false;
         private bool isUnderline = false;
-        private static bool open;      
-
+        private static bool open;
+        #endregion
+        #region constructor
         public frmTextEditor()
         {
             this.WindowState = FormWindowState.Minimized;
@@ -50,7 +52,57 @@ namespace frmEditor
                 key.Close();
             }
         }
+        #endregion
+        #region voids
+        private void ChangeFontStyle(ref bool isBold, ref bool isItalic, ref bool isUnderlined,
+            FontStyle bold, FontStyle italic, FontStyle underline, ToolStripButton tsbBold)
+        {
+            if (!isBold)
+            {
+                tsbBold.BackColor = Color.LightBlue;
+                isBold = !isBold;
+                if (!isItalic && !isUnderlined)
+                {
+                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, bold);
+                }
+                else if (!isItalic && isUnderlined)
+                {
+                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, bold | underline);
+                }
+                else if (isItalic && !isUnderlined)
+                {
+                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, bold | italic);
+                }
+                else
+                {
+                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, bold | italic | underline);
+                }
+            }
+            else
+            {
+                tsbBold.BackColor = Color.Transparent;
+                isBold = !isBold;
 
+                if (!isItalic && !isUnderlined)
+                {
+                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, FontStyle.Regular);
+                }
+                else if (!isItalic && isUnderlined)
+                {
+                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, FontStyle.Regular | underline);
+                }
+                else if (isItalic && !isUnderlined)
+                {
+                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, FontStyle.Regular | italic);
+                }
+                else
+                {
+                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, FontStyle.Regular | italic | underline);
+                }
+            }
+        }
+        #endregion
+        #region events
         private void ShowNewForm(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("¿Desea guardar los cambios a Documento?",
@@ -246,53 +298,6 @@ namespace frmEditor
             }
         }
 
-        private void ChangeFontStyle(ref bool isBold, ref bool isItalic, ref bool isUnderlined,
-            FontStyle bold, FontStyle italic, FontStyle underline, ToolStripButton tsbBold)
-        {
-            if (!isBold)
-            {
-                tsbBold.BackColor = Color.LightBlue;
-                isBold = !isBold;
-                if (!isItalic && !isUnderlined)
-                {
-                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, bold);
-                }
-                else if (!isItalic && isUnderlined)
-                {
-                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, bold | underline);
-                }
-                else if (isItalic && !isUnderlined)
-                {
-                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, bold | italic);
-                }
-                else
-                {
-                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, bold | italic | underline);
-                }
-            }
-            else
-            {
-                tsbBold.BackColor = Color.Transparent;
-                isBold = !isBold;
-
-                if (!isItalic && !isUnderlined)
-                {
-                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, FontStyle.Regular);
-                }
-                else if (!isItalic && isUnderlined)
-                {
-                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, FontStyle.Regular | underline);
-                }
-                else if (isItalic && !isUnderlined)
-                {
-                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, FontStyle.Regular | italic);
-                }
-                else
-                {
-                    rtbEditor.SelectionFont = new Font(rtbEditor.SelectionFont.FontFamily, rtbEditor.SelectionFont.Size, FontStyle.Regular | italic | underline);
-                }
-            }
-        }
         private void tsbBold_Click_1(object sender, EventArgs e)
         {
             ToolStripButton btn = (ToolStripButton)sender;
@@ -433,7 +438,30 @@ namespace frmEditor
                 openForm.BringToFront();
             }
         }
+       
+        private void frmTextEditor_Shown(object sender, EventArgs e)
+        {
+            this.ShowInTaskbar = false;
+            this.nfyMessage.Visible = true;
+            this.nfyMessage.BalloonTipText = "Bienvenido/a al programa";
+            this.nfyMessage.ShowBalloonTip(1000);
+        }
 
+        private void nfyMessage_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                Show();
+                this.WindowState = FormWindowState.Normal;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
+        }
+        #endregion
+        #region properties
         public static bool Open { get => open; set => open = value; }
+        #endregion
     }
 }

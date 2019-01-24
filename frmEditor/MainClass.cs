@@ -7,7 +7,6 @@
  */
 
 
-using Exercise8;
 using System;
 using System.Windows.Forms;
 
@@ -19,6 +18,7 @@ namespace frmEditor
         /// Punto de entrada principal para la aplicación.
         /// </summary>
         [STAThread]
+        #region main
         static void Main()
         {
             frmSplashScreen splash;
@@ -31,5 +31,6 @@ namespace frmEditor
                 Application.Run(new frmTextEditor());
             }
         }
+        #endregion
     }
 }
